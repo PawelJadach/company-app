@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const DepartmentController = require('../controllers/departments.controller');
+const { getAll, getRandom, getById, post, editById, deleteById } = require('../controllers/departments.controller');
 
-router.get('/departments', DepartmentController.getAll);
-router.get('/departments/random', DepartmentController.getRandom);
-router.get('/departments/:id', DepartmentController.getById);
-router.post('/departments', DepartmentController.post);
-router.put('/departments/:id', DepartmentController.editById);
-router.delete('/departments/:id', DepartmentController.deleteById);
+router.get('/departments', getAll);
+router.get('/departments/random', getRandom);
+router.get('/departments/:id', getById);
+router.post('/departments', post);
+router.put('/departments/:id', editById);
+router.delete('/departments/:id', deleteById);
 
 module.exports = router;
