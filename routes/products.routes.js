@@ -1,75 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Product = require('../models/product.model');
+const ProductsController = require('../controllers/products.controller');
 
 
-router.get('/products', async (req, res) => {
-  try {
-    res.json(await Product.find());
-  } catch(err){
-    res.status(500).json({ message: err });
-  }
-});
 
-router.get('/products/random', async (req, res) => {
-  try {
-    const count = await Product.countDocuments();
-    const rand = Math.floor(Math.random() * count);
-    const product = await Product.findOne().skip(rand);
-    if(!product) res.status(404).json({ message: 'Not found' });
-    else res.json(product);
-  } catch(err){
-    res.status(500).json({ message:err });
-  }
-});
-
-router.get('/products/:id', async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if(!product) res.status(404).json({ message: 'Not found' });
-    else res.json(product);
-  } catch(err){
-    res.status(500).json({ message: err });
-  }
-});
-
-router.post('/products', async (req, res) => {
-  const { name, client } = req.body;
-  try { 
-    const product = new Product({ name: name, client: client });
-    await product.save();
-    res.json({ message: 'OK' });
-  } catch(err){
-    res.status(500).json({ message: err });
-  }
-});
-
-router.put('/products/:id', async (req, res) => {
-  const newData = req.body;
-  try {
-    const product = Product.findById(req.params.id);
-    if(product){
-      newData.client ? product.client = newData.client : null
-      newData.name ? product.name = newData.name : null
-      await product.save();
-      res.json({ message: 'OK' });
-    } else res.status(404).json({ message: 'Not found' });
-  } catch(err){
-    res.status(500).json({ message: err });
-  }
-});
-
-router.delete('/products/:id', async (req, res) => {
-  try {
-    const product = await(Product.findById(req.params.id));
-    if(product) {
-      await Product.deleteOne({ _id: req.params.id });
-      res.json({ message: 'OK' });
-    }
-    else res.status(404).json({ message: 'Not found...' });
-  } catch(err){
-    res.status(500).json({ message: err });
-  }
-});
+router.get('/products', ProductsController.getAll);
+router.get('/products/random', ProductsController.getRandom);
+router.get('/products/:id', ProductsController.getById);
+router.post('/products', ProductsController.post);
+router.put('/products/:id', ProductsController.editById);
+router.delete('/products/:id', ProductsController.deleteById);
 
 module.exports = router;
