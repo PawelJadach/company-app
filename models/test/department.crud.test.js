@@ -9,10 +9,14 @@ describe('Department', () => {
     try {
       const fakeDB = new MongoMemoryServer();
       const uri = await fakeDB.getConnectionString();
-      mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+      await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     } catch(err) {
       console.log(err);
     }
+  });
+
+  after(async () => {
+    await Department.deleteMany();
   });
 
   describe('Reading data', () => {
