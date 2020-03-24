@@ -9,10 +9,6 @@ describe('Department', () => {
     dep.validate(err => {
       expect(err.errors.name).to.exist;
     });
-
-    after(() => {
-      mongoose.models = {};
-    });
   });
 
   it('should throw an error if "name" is not a string', () => {
@@ -25,10 +21,6 @@ describe('Department', () => {
         expect(err.errors.name).to.exist;
       });
     }
-
-    after(() => {
-      mongoose.models = {};
-    });
   });
 
   it('should throw an error if "name" arg length is <5 or >20', () => {
@@ -40,10 +32,6 @@ describe('Department', () => {
         expect(err.errors.name).to.exist;
       });
     }
-
-    after(() => {
-      mongoose.models = {};
-    });
   });
 
   it('shouldnt throw an error if "name" arg length is OK', () => {
@@ -55,10 +43,5 @@ describe('Department', () => {
         expect(!err.errors.name).to.exist;
       });
     }
-
-    after(() => {
-      mongoose.models = {};
-    });
   });
- 
 });

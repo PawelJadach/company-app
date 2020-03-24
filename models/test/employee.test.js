@@ -30,10 +30,6 @@ describe('Employee', () => {
           expect(err.errors.department).to.exist;
         });
       })
-      
-    after(() => {
-      mongoose.models = {};
-    });
   });
 
   it('should throw an error if no have firstname arg or its not string', () => {
@@ -60,10 +56,6 @@ describe('Employee', () => {
         expect(err.errors.firstName).to.exist;
       });
     })
-
-    after(() => {
-      mongoose.models = {};
-    });
   });
 
   it('should throw an error if no have lastName arg or its not string', () => {
@@ -90,9 +82,5 @@ describe('Employee', () => {
         expect(err.errors.lastName).to.exist;
       });
     })
-
-    after(() => {
-      mongoose.models = {};
-    });
   });
 });
